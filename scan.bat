@@ -28,3 +28,4 @@ rem Output the JSON array
 echo %json%
 
 endlocal
+pause
