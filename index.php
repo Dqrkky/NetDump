@@ -1,26 +1,17 @@
 <?php
-// Inclute filles
+
 include("capture_packets.php");
 
-// Remove the header php info
 header_remove("X-Powered-By");
 
-// Get the HTTP method
 $method = $_SERVER['REQUEST_METHOD'];
-
-// Get the URL
 $url = $_SERVER['REQUEST_URI'];
-
-// Get the parameters
 $params = $_GET;
 
-// Get the request body
 $body = file_get_contents("php://input");
 
-// Get the headers
 $headers = getallheaders();
 
-// Set header for json
 header("Content-Type: application/json");
 
 // Initialize class
@@ -29,7 +20,7 @@ $ts = new TShark(
 );
 
 // Check server HTTP method
-if ($method === "GET" && $url == "/api/a") {
+if ($method === "GET" && $url == "/api/capture") {
     print_r($ts->capture("WiFi"));
 } else {
     http_response_code(405);

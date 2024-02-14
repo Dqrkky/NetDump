@@ -10,8 +10,8 @@ class TShark {
     public function capture(string $networkInterface = null) {
         $tsharkPath = $this->config["path"];
         $command = "$tsharkPath -i $networkInterface -l -T fields -e frame.number -e frame.len -e frame.time -e ip.src -e ip.dst -e tcp.srcport -e tcp.dstport";
-        return $command;
-        
+        exec($command, $output, $code);
+        return $output;
     }
 }
 
