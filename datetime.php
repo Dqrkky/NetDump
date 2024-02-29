@@ -27,8 +27,8 @@ while (true) {
             ),
             'time' => array(
                 'hour' => $hour,
-                'minutes' => $minutes,
-                'seconds' => $seconds,
+                'minute' => $minutes,
+                'second' => $seconds,
             )
         )
     );

@@ -2,8 +2,9 @@ import pyshark
 
 def capture_live_packets(network_interface=None):
     if network_interface != None:
-        with pyshark.LiveCapture(interface=network_interface, tshark_path="D:\\Programs\\Other\\WiresharkPortable64\\App\\Wireshark\\tshark.exe") as capture:
+        with pyshark.LiveCapture(interface=network_interface, tshark_path="/usr/bin/tshark") as capture:
             for raw_packet in capture.sniff_continuously():
+                raw_packet : pyshark.packet.packet.Packet
                 data = {
                     "captured_length": raw_packet.captured_length,
                     "length": raw_packet.length,
@@ -14,7 +15,7 @@ def capture_live_packets(network_interface=None):
                     "layers": raw_packet.layers,
                     "frame_info": raw_packet.frame_info
                 }
-                yield data
+                yield type(raw_packet)
 
 def get_packet_details(packet):
     protocol = packet.transport_layer
@@ -30,5 +31,5 @@ def get_packet_details(packet):
         Destination port: {destination_port}
     """
 
-for packet in capture_live_packets(network_interface="mpqemubr0"):
+for packet in capture_live_packets(network_interface="wlo1"):
     print(packet)

@@ -1,5 +1,6 @@
 <?php
 
+
 header_remove("X-Powered-By");
 header('Access-Control-Allow-Origin: *');
 
@@ -54,7 +55,7 @@ switch ($request['method']) {
         } else if ($request['path'] == "/api/wireshark/capture") {
             http_response_code(400);
             header('Content-Type: application/json');
-            echo json_encode(['message' => 'wip']);
+            echo json_encode(['message' => 'Invalid request']);
         } else {
             http_response_code(400);
             header('Content-Type: application/json');
