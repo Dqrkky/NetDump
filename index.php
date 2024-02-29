@@ -1,38 +1,28 @@
 <?php
 
-include("capture_packets.php");
-
 header_remove("X-Powered-By");
+header('Access-Control-Allow-Origin: *');
+header('Content-Tyep: application/json');
 
-$method = $_SERVER['REQUEST_METHOD'];
-$url = $_SERVER['REQUEST_URI'];
-$params = $_GET;
-
-$body = file_get_contents("php://input");
-
-$headers = getallheaders();
-
-header("Content-Type: application/json");
-
-// Initialize class
-$ts = new TShark(
-    "D:\\Programs\\Other\\WiresharkPortable64\\App\\Wireshark\\tshark.exe"
+$request = array(
+    'method' => $_SERVER['REQUEST_METHOD'],
+    'path' => parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH),
+    'params' => $_GET
 );
 
-// Check server HTTP method
-if ($method === "GET" && $url == "/api/capture") {
-    print_r($ts->capture("WiFi"));
-} else {
-    http_response_code(405);
-    echo json_encode(
-        array(
-            "method" => $method,
-            "url" => $url,
-            "params" => $params,
-            "body" => $body,
-            "headers" => $headers
-        )
-    );
+switch ($request["method"]) {
+    case "GET":
+        switch ($request["path"]) {
+            case "/api/user":
+                echo json_encode(["message" => "GET request to /api/user", "params" => $parameters], JSON_PRETTY_PRINT);
+                break;
+            default:
+                http_response_code(404);
+                echo json_encode(["error" => "Endpoint not found"], JSON_PRETTY_PRINT);
+        }
+    default:
+        http_response_code(405);
+        echo json_encode(["error" => "Method not allowed"], JSON_PRETTY_PRINT);
 }
 
 ?>

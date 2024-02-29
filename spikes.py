@@ -22,7 +22,13 @@ def get_packet_details(packet):
     destination_address = packet.ip.dst
     source_port = packet[protocol].srcport
     destination_port = packet[protocol].dstport
-    return f"\Protocol type: {protocol}\nSource address: {source_address}\nSource port: {source_port}\nDestination address: {destination_address}\nDestination port: {destination_port}"
+    return f"""
+        Protocol type: {protocol}\n
+        Source address: {source_address}\n
+        Source port: {source_port}\n
+        Destination address: {destination_address}\n
+        Destination port: {destination_port}
+    """
 
-for packet in capture_live_packets(network_interface="Ethernet 2"):
+for packet in capture_live_packets(network_interface="mpqemubr0"):
     print(packet)
